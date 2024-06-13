@@ -1,0 +1,55 @@
+﻿@page "/weather"
+@using BlazorAppWebApp.Services
+@using BlazorAppWebApp.Model
+@attribute [StreamRendering]
+@inject INote ClientService
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Id</td>
+                    <td>@forecast.Title</td>
+                    <td>@forecast.Description</td>
+                    <td>@forecast.CreatedDate.ToShortDateString()</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IList<NoteModel>? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+
+        var result = await ClientService.GetAllNotes();
+
+         forecasts = result;
+    }
+
+    
+}
