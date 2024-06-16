@@ -1,7 +1,7 @@
 
 using BlazorAppWebApp.Components;
 using BlazorAppWebApp.Services;
-using Microsoft.EntityFrameworkCore;
+
 
 
 var builder = WebApplication.CreateBuilder(args);

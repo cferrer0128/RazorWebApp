@@ -25,7 +25,7 @@ else
 <NoteButton />
 
 @code {
-    IEnumerable<NoteModel> notes = new List<NoteModel>();
+    IEnumerable<NoteModel> notes = null;
    
     protected override async Task OnInitializedAsync()
     {
