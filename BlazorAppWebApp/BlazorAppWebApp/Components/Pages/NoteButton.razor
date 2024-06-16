@@ -1,0 +1,13 @@
+﻿@inject NavigationManager Navigation
+@rendermode InteractiveServer
+<button @onclick="HandleNotes" class="btn btn-primary">Notes</button>
+
+@code {
+    
+    public void HandleNotes()
+    {
+        Navigation.NavigateTo("/editnote");
+    }
+   
+
+}
