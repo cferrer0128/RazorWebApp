@@ -31,9 +31,18 @@ namespace BlazorAppWebApp.Services
 
         public async Task<IList<NoteModel>> GetAllNotes()
         {
-            var result = await _httpClient.GetAsync("/api/notes");
-            return JsonConvert.DeserializeObject<IList<NoteModel>>(await result.Content.ReadAsStringAsync())!;
-                
+            try
+            {
+                _httpClient.Timeout = TimeSpan.FromMinutes(10);
+                var result = await _httpClient.GetAsync("api/notes");
+                return JsonConvert.DeserializeObject<IList<NoteModel>>(await result.Content.ReadAsStringAsync())!;
+
+            }
+            catch (Exception ex) { 
+                return new List<NoteModel>();
+            }
+
+
         }
 
         public Task<NoteModel> GetNoteById(int Id)
