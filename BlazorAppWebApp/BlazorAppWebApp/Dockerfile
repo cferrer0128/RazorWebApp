@@ -9,16 +9,15 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["BlazorAppWebApp/BlazorAppWebApp.csproj", "BlazorAppWebApp/"]
-COPY ["BlazorAppWebApp.Client/BlazorAppWebApp.Client.csproj", "BlazorAppWebApp.Client/"]
-RUN dotnet restore "./BlazorAppWebApp/BlazorAppWebApp.csproj"
+COPY ["BlazorAppWebApp.csproj", "."]
+RUN dotnet restore "./BlazorAppWebApp.csproj"
 COPY . .
-WORKDIR "/src/BlazorAppWebApp"
-RUN dotnet build "./BlazorAppWebApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/."
+RUN dotnet build "BlazorAppWebApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./BlazorAppWebApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "BlazorAppWebApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
