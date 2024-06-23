@@ -5,15 +5,14 @@ using BlazorAppWebApp.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
+var environmentName = Environment.GetEnvironmentVariable("HTTP_ENVIRONMENT");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddScoped(http => new HttpClient { BaseAddress = 
-    new Uri(builder.Configuration.GetSection("BaseUri").Value!)
-    });
+builder.Services.AddScoped(http => new HttpClient { BaseAddress = new Uri(uriString: environmentName) });
 
 
 builder.Services.AddScoped<INote, ClientNote>();
